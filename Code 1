@@ -1,0 +1,226 @@
+package enemygenerator;
+
+import java.util.*;
+
+public class EnemyGenerator {
+    static Random rand = new Random();
+    static Scanner looper = new Scanner(System.in);
+    public static final int PlayerStat = 15;
+    public static int RandRace()
+    {
+        int race = rand.nextInt(10);
+        
+        return(race);
+    }
+    
+    public static String ChooseRace(int race)
+    {
+        String EnemyRace;
+        
+        switch(race)
+        {
+            case(1):
+            {
+                EnemyRace = "Orc";
+                break;
+            }
+            case(2):
+            {
+                EnemyRace = "Ogre";
+                break;
+            }
+            case(3):
+            {
+                EnemyRace = "Gibberling";
+                break;
+            }
+            case(4):
+           {
+                EnemyRace = "Shade";
+                break;
+           }
+            case(5):
+            {
+                EnemyRace = "Grue";
+                break;
+            }
+            case(6):
+            {
+                EnemyRace = "Spider";
+                break;
+            }
+            case(7):
+            {
+                EnemyRace = "Goblin";
+                break;
+            }
+            case(8):
+            {
+                EnemyRace = "Skeleton";
+                break;
+            }
+            case(9):
+            {
+                EnemyRace = "Zombie";
+                break;
+            }
+            default:
+            {
+                EnemyRace = "Weir Demon";
+                break;
+            }
+        }
+        
+        return(EnemyRace);
+    }
+    
+    public static int RandSpec()
+    {
+        int spec;
+        
+        do{
+            spec = rand.nextInt(PlayerStat);//adjusts to player stat boundaries, this brings randomness, but will be scaled to fight.
+            spec+=5;//randomises value of spec (0 to 15 inclusive) and adjusts (5 to 20 inclusive)
+        }while(spec < 3);
+        
+        return(spec);
+    }
+    
+    public static int AddSpec(int spec, int adjust)
+    {
+        spec+=adjust;
+        
+        return(spec);
+    }
+    
+    public static int NegSpec(int spec, int adjust)
+    {
+        spec-=adjust;
+        return(spec);
+    }
+    
+    public static void Print(String Enemyrace, int Str, int Int, int Cha, int HP, int Dex)
+    {
+        System.out.print("\n Enemy is "+Enemyrace);
+        System.out.print("\n\n Enemy Strength: "+Str);
+        System.out.print("\n Enemy Intelligence: "+Int);
+        System.out.print("\n Enemy Charisma: "+Cha);
+        System.out.print("\n Enemy Hit Points: "+HP);
+        System.out.print("\n Enemy Dexterity: "+Dex);
+        
+        System.out.print("\n\n Would you like to repeat the exercise?\n ");
+    }
+    
+    public static boolean GetLoop()
+    {
+        char check;
+        
+        boolean loop = true;
+        do
+        {
+            check = looper.next().charAt(0);
+            check = Character.toLowerCase(check);
+        
+            if(check == 'n')
+                loop = false;
+            
+            if(check != 'n' && check != 'y')
+               System.out.print(" Error! Please, try again!\n ");
+            
+        }while(check != 'y' && check != 'n');
+        
+        return(loop);
+    }
+    
+    public static void main(String[] args)
+    {
+        int race;
+        String EnemyRace;
+        boolean loop;
+        int Str, Int, Cha, HP, Dex;
+        
+        do
+        {
+            race = RandRace();
+            EnemyRace = ChooseRace(race);
+            
+            Str = RandSpec();
+            Int = RandSpec();
+            Cha = RandSpec();
+            HP = RandSpec();
+            Dex = RandSpec();
+            
+            if(EnemyRace.equalsIgnoreCase("orc"))
+            {
+                Str = AddSpec(Str, 2);
+                Int = NegSpec(Int, 2);
+            }
+            else
+                if(EnemyRace.equalsIgnoreCase("ogre"))
+                {
+                    Str = AddSpec(Str, 3);
+                    HP = AddSpec(HP, 4);
+                    Cha = NegSpec(Cha, 2);
+                    Int = NegSpec(Int, 3);
+                }
+                else
+                    if(EnemyRace.equalsIgnoreCase("gibberling"))
+                    {
+                        Str = AddSpec(Str, 1);
+                        Int = AddSpec(Int, 2);
+                        Cha = NegSpec(Cha, 1);
+                    }
+                    else
+                        if(EnemyRace.equalsIgnoreCase("shade"))
+                        {
+                            Int = AddSpec(Int, 4);
+                            Dex = AddSpec(Dex, 2);
+                            Cha = NegSpec(Cha, 2);
+                        }
+                        else
+                            if(EnemyRace.equalsIgnoreCase("grue"))
+                            {
+                                Str = AddSpec(Str, 2);
+                                Int = NegSpec(Int, 2);
+                            }
+                            else
+                                if(EnemyRace.equalsIgnoreCase("spider"))
+                                {
+                                    HP = AddSpec(HP, 2);
+                                    Dex = AddSpec(Dex, 2);
+                                    Cha = NegSpec(Cha, Cha);//spiders will always have 0 Charisma. Spiders are freaking scary, man.
+                                }
+                                else
+                                    if(EnemyRace.equalsIgnoreCase("goblin"))
+                                    {
+                                        Cha = AddSpec(Cha, 2);
+                                        Int = AddSpec(Int, 2);
+                                        HP = NegSpec(HP, 3);
+                                    }
+                                    else
+                                        if(EnemyRace.equalsIgnoreCase("skeleton"))
+                                        {
+                                            Dex = AddSpec(Dex, 3);
+                                            HP = NegSpec(HP, 1);
+                                        }
+                                        else
+                                            if(EnemyRace.equalsIgnoreCase("zombie"))
+                                            {
+                                                Str = AddSpec(Str, 3);
+                                                HP = NegSpec(HP, 2);
+                                            }
+                                            else
+                                                if(EnemyRace.equalsIgnoreCase("Weir Demon"))
+                                                {
+                                                    HP = AddSpec(HP, 3);
+                                                    Int = AddSpec(Int, 3);
+                                                    Cha = AddSpec(Cha, 2);
+                                                    Str = NegSpec(Str, 4);
+                                                }
+            
+            Print(EnemyRace, Str, Int, Cha, HP, Dex);
+            
+            loop = GetLoop();
+        }while(loop);   
+    } 
+}
